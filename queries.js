@@ -1,14 +1,19 @@
 const database = require("./database-connection");
 
 module.exports = {
-    list(){
+    list() {
+        return database('games')
     },
-    read(id){
+    read(id) {
+        return database('games').where('id', id).first()
     },
-    create(game){
+    create(games) {
+        return database('games').insert(games).returning('*').then(record => record[0])
     },
-    update(id, game){
+    update(id, games) {
+        return database('games').where('id', id).update(games)
     },
-    delete(id){
+    delete(id) {
+        return database('games').where('id', id).delete()
     }
 };
